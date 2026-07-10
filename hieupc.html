@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HieuPC</title>
+    <style>
+        html, body {
+            height: 100%;
+            margin: 0;
+        }
+        body {
+            background-image: url('https://scontent.fhan15-2.fna.fbcdn.net/v/t39.30808-6/481977431_23956956843893547_4711152998434373370_n.jpg?stp=dst-jpg_tt6&cstp=mx1440x1080&ctp=s1440x1080&_nc_cat=103&ccb=1-7&_nc_sid=cc71e4&_nc_ohc=dRoTqyzZYkQQ7kNvwF5v-11&_nc_oc=AdqkLcpDd_JKkWTbZrqvmellfeWGLzaNUc7GrVQ8PFO4mbMvhTM5MfKs9G7bDy_2j1YSLm6AkiyHD5X2FetOTTXE&_nc_zt=23&_nc_ht=scontent.fhan15-2.fna&_nc_gid=P60La5mrLiZh8c1dpqNqgw&_nc_ss=7b2a8&oh=00_AQCHCYmSAHKR_hrtKLTHJf17jK49enBLRJrrsHsOu5Lrvg&oe=6A4E6C27');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+        .register-button {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(255,255,255,0.95);
+            color: #000;
+            padding: 12px 18px;
+            border-radius: 8px;
+            border: 1px solid #333;
+            text-decoration: none;
+            font-weight: bold;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+        }
+        .register-button:hover {
+            background: rgba(255,255,255,1);
+        }
+        .zalo-card {
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 220px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            padding: 14px;
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            font-family: Arial, sans-serif;
+        }
+        .zalo-card img {
+            width: 72px;
+            height: 72px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+        .zalo-card a {
+            color: #0068ff;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .zalo-card a:hover {
+            text-decoration: underline;
+        }
+        .zalo-card {
+            display: none;
+            position: fixed;
+            top: 80px;
+            right: 20px;
+            width: 260px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #333;
+            border-radius: 12px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+            padding: 14px;
+            gap: 12px;
+            align-items: center;
+            font-family: Arial, sans-serif;
+            flex-direction: column;
+            text-align: center;
+        }
+        .zalo-card.show {
+            display: flex;
+        }
+        .zalo-card img {
+            width: 120px;
+            height: 120px;
+            border-radius: 12px;
+            object-fit: cover;
+            border: 1px solid #ddd;
+        }
+        .zalo-close {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: transparent;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #333;
+        }
+        .left-button {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            width: auto;
+            min-width: 180px;
+            max-width: 260px;
+            background: rgba(255,255,255,0.95);
+            border: 1px solid #333;
+            border-radius: 8px;
+            padding: 12px 18px;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.2);
+            font-family: Arial, sans-serif;
+            z-index: 2;
+            color: #000;
+            text-align: center;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            font-weight: bold;
+            text-decoration: none;
+        }
+        .left-button:hover {
+            background: rgba(255,255,255,1);
+            transform: scale(1.02);
+        }
+        .left-button strong {
+            font-size: 18px;
+        }
+        .left-button span {
+            display: none;
+        }
+        .schedule-popup {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.55);
+            justify-content: center;
+            align-items: center;
+            z-index: 10;
+        }
+        .schedule-popup.show {
+            display: flex;
+        }
+        .schedule-box {
+            width: min(90vw, 480px);
+            background: #fff;
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+            position: relative;
+            font-family: Arial, sans-serif;
+        }
+        .schedule-box h3 {
+            margin: 0 0 12px;
+            color: #0a5cff;
+            font-size: 24px;
+        }
+        .schedule-actions {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 12px;
+        }
+        .schedule-actions button {
+            flex: 1;
+            min-width: 90px;
+            padding: 10px 12px;
+            border: none;
+            border-radius: 8px;
+            background: #0a5cff;
+            color: #fff;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .schedule-actions button:hover {
+            background: #084bcc;
+        }
+        .schedule-content {
+            color: #333;
+            line-height: 1.7;
+        }
+        .schedule-content ul {
+            padding-left: 20px;
+            margin: 0;
+        }
+        .schedule-close {
+            position: absolute;
+            top: 10px;
+            right: 12px;
+            border: none;
+            background: transparent;
+            font-size: 22px;
+            cursor: pointer;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <button id="scheduleButton" class="left-button" type="button">
+        Lịch học
+    </button>
+    <a id="registerButton" class="register-button" href="https://zalo.me/84968545995" target="_blank" rel="noopener noreferrer">Đăng kí khóa học</a>
+    <div id="zaloCard" class="zalo-card">
+        <button id="closeZaloCard" class="zalo-close" aria-label="Đóng">×</button>
+        <img src="zalo-qr.png" alt="QR Zalo" />
+        <div>
+            <strong>Thầy Hieu</strong><br>
+            <p>Nhấn vào đây để mở Zalo thầy.</p>
+            <a href="https://zalo.me/84968545995" target="_blank" rel="noopener noreferrer">Mở danh thiếp Zalo</a>
+        </div>
+    </div>
+    <div id="schedulePopup" class="schedule-popup">
+        <div class="schedule-box">
+            <button id="closeSchedule" class="schedule-close" aria-label="Đóng">×</button>
+            <h3>Lịch học</h3>
+            <div class="schedule-actions">
+                <button class="schedule-choice" data-day="9A" type="button">9A</button>
+                <button class="schedule-choice" data-day="9B" type="button">9B</button>
+                <button class="schedule-choice" data-day="9C" type="button">9C</button>
+            </div>
+            <div id="scheduleContent" class="schedule-content">
+                <strong>9A</strong>
+                <ul>
+                    <li>Thứ 2:17:00 - 19:00</li>
+                    <li>Thứ 4:17:00 - 19:00</li>
+                    <li>Thứ 6:14:00 - 16:00 (Chỉ học trong hè)</li>
+            </div>
+        </div>
+    </div>
+    <h1 style="text-align:center;font-size:50px">Welcome to TinHocTre3B</h1>
+    <script>
+        document.getElementById('registerButton').addEventListener('click', function(event) {
+            event.preventDefault();
+            var zaloUrl = this.href;
+            var card = document.getElementById('zaloCard');
+            card.classList.add('show');
+            card.style.display = 'flex';
+            setTimeout(function() {
+                window.open(zaloUrl, '_blank');
+            }, 150);
+        });
+        document.getElementById('closeZaloCard').addEventListener('click', function() {
+            var card = document.getElementById('zaloCard');
+            card.classList.remove('show');
+            card.style.display = 'none';
+        });
+        var schedulePopup = document.getElementById('schedulePopup');
+        var scheduleContent = document.getElementById('scheduleContent');
+        var scheduleData = {
+            '9A': '<strong>9A</strong><ul><li>Thứ 2:17:00 - 19:00</li><li>Thứ 4:17:00 - 19:00</li><li>Thứ 6:14:00 - 16:00 (Chỉ học trong hè) </li></ul>',
+            '9B': '<strong>9B</strong><ul><li>Thứ 3:19:30 - 21:30</li><li>Thứ 5:19:30 - 21:30</li><li>Thứ 7:14:00 - 16:00 (Chỉ học trong hè) </li></ul>',
+            '9C': '<strong>9C</strong><ul><li>Thứ 3:14:00 - 16:00</li><li>Thứ 6:19:30 - 21:30</li><li>Chủ nhật:9:15 - 11:15 (Chỉ học trong hè) </li></ul>'
+        };
+
+        document.getElementById('scheduleButton').addEventListener('click', function() {
+            schedulePopup.classList.add('show');
+        });
+        document.getElementById('closeSchedule').addEventListener('click', function() {
+            schedulePopup.classList.remove('show');
+        });
+        document.querySelectorAll('.schedule-choice').forEach(function(button) {
+            button.addEventListener('click', function() {
+                scheduleContent.innerHTML = scheduleData[this.getAttribute('data-day')];
+            });
+        });
+    </script>
+</body>
+</html>
